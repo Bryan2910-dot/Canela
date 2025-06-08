@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Canela")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8358a157f90afa7d60e0a1a62b01da58becb2cd6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a3fb1ecba829b7583566631ae4e29da57cabd8f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Canela")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Canela")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
