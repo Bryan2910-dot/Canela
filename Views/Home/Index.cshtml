@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegance - Colección Femenina</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        :root {
+            --rosa-principal: #e83e8c;
+            --rosa-claro: #f9d6e8;
+            --gris-oscuro: #333;
+            --gris-claro: #777;
+            --blanco: #fff;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f3f3;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--rosa-principal);
+            color: var(--blanco);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #d42d7b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(232, 62, 140, 0.3);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--gris-oscuro);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--rosa-principal);
+        }
+        
+        .section-title p {
+            color: var(--gris-claro);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--blanco);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Colecciones */
+        .collections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .collection-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .collection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .collection-img {
+            height: 350px;
+            overflow: hidden;
+        }
+        
+        .collection-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .collection-card:hover .collection-img img {
+            transform: scale(1.1);
+        }
+        
+        .collection-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .collection-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--gris-oscuro);
+        }
+        
+        .collection-info p {
+            color: var(--gris-claro);
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--rosa-principal);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        /* Banner de temporada */
+        .season-banner {
+            background-color: var(--rosa-claro);
+            padding: 60px 0;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .season-banner h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--gris-oscuro);
+        }
+        
+        .season-banner p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Testimonios */
+        .testimonials {
+            background-color: var(--blanco);
+            padding: 60px 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--gris-oscuro);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--gris-oscuro);
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--gris-claro);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--rosa-principal);
+            color: var(--blanco);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--gris-oscuro);
+            color: var(--blanco);
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #222;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <!-- El header estaría incluido desde otro archivo -->
+    <!-- Contenido del body comienza aquí -->
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Descubre tu estilo único</h1>
+            <p>La nueva colección primavera-verano 2023 está aquí. Diseños exclusivos que realzan tu belleza natural.</p>
+            <a href="#" class="btn">Ver colección</a>
+        </div>
+    </section>
+    
+    <!-- Colecciones destacadas -->
+    <section class="container">
+        <div class="section-title">
+            <h2>Nuestras Colecciones</h2>
+            <p>Descubre las últimas tendencias en moda femenina para todas las ocasiones.</p>
+        </div>
+        
+        <div class="collections">
+            <!-- Producto 1 -->
+            <div class="collection-card">
+                <div class="collection-img">
+                    <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Vestido floral">
+                </div>
+                <div class="collection-info">
+                    <h3>Vestido Floral Primaveral</h3>
+                    <p>Perfecto para días soleados y paseos en la ciudad.</p>
+                    <span class="price">$89.99</span>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+            
+            <!-- Producto 2 -->
+            <div class="collection-card">
+                <div class="collection-img">
+                    <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Conjunto elegante">
+                </div>
+                <div class="collection-info">
+                    <h3>Conjunto Elegante Negro</h3>
+                    <p>Ideal para reuniones de trabajo o eventos formales.</p>
+                    <span class="price">$129.99</span>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+            
+            <!-- Producto 3 -->
+            <div class="collection-card">
+                <div class="collection-img">
+                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Jeans y blusa">
+                </div>
+                <div class="collection-info">
+                    <h3>Jeans Slim Fit + Blusa</h3>
+                    <p>Combinación perfecta para un look casual pero sofisticado.</p>
+                    <span class="price">$79.99</span>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+            
+            <!-- Producto 4 -->
+            <div class="collection-card">
+                <div class="collection-img">
+                    <img src="https://images.unsplash.com/photo-1554412933-514a83d2f3c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Abrigo de invierno">
+                </div>
+                <div class="collection-info">
+                    <h3>Abrigo de Invierno Beige</h3>
+                    <p>Calidez y estilo para los días más fríos del año.</p>
+                    <span class="price">$149.99</span>
+                    <a href="#" class="btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Banner de temporada -->
+    <section class="season-banner">
+        <div class="container">
+            <h2>Colección Verano 2023</h2>
+            <p>Descubre nuestros nuevos diseños inspirados en las playas del Mediterráneo. Telas frescas, colores vibrantes y cortes que realzan tu figura.</p>
+            <a href="#" class="btn">Ver nueva colección</a>
+        </div>
+    </section>
+    
+    <!-- Testimonios -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen nuestras clientas</h2>
+                <p>Más de 10,000 mujeres confían en nosotros para encontrar su estilo perfecto.</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <!-- Testimonio 1 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"La calidad de las prendas superó todas mis expectativas. El vestido que compré es tan cómodo como elegante."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="María González">
+                        </div>
+                        <div class="author-info">
+                            <h4>María González</h4>
+                            <p>Cliente desde 2020</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonio 2 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"El servicio al cliente es excepcional. Me ayudaron a encontrar exactamente lo que buscaba para mi evento especial."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Laura Martínez">
+                        </div>
+                        <div class="author-info">
+                            <h4>Laura Martínez</h4>
+                            <p>Cliente desde 2021</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonio 3 -->
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Siempre encuentro piezas únicas que nadie más tiene. Me encanta lo exclusivo de sus colecciones."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Ana Rodríguez">
+                        </div>
+                        <div class="author-info">
+                            <h4>Ana Rodríguez</h4>
+                            <p>Cliente desde 2019</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Únete a nuestro newsletter</h2>
+            <p>Recibe descuentos exclusivos, novedades de nuestras colecciones y consejos de estilo directamente en tu correo.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer estaría en otro archivo -->
+    
+    <!-- Font Awesome para los iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
