@@ -10685,11 +10685,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BRYAN\\clases\\PROGRAMACION 1\\canela\\Canela\\Canela.csproj",
+      "projectUniqueName": "D:\\BRYAN\\clases\\PROGRAMACION 1\\copia\\Canela\\Canela.csproj",
       "projectName": "Canela",
-      "projectPath": "D:\\BRYAN\\clases\\PROGRAMACION 1\\canela\\Canela\\Canela.csproj",
+      "projectPath": "D:\\BRYAN\\clases\\PROGRAMACION 1\\copia\\Canela\\Canela.csproj",
       "packagesPath": "C:\\Users\\HOME\\.nuget\\packages\\",
-      "outputPath": "D:\\BRYAN\\clases\\PROGRAMACION 1\\canela\\Canela\\obj\\",
+      "outputPath": "D:\\BRYAN\\clases\\PROGRAMACION 1\\copia\\Canela\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HOME\\AppData\\Roaming\\NuGet\\NuGet.Config"
