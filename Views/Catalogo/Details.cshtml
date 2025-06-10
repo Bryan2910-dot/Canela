@@ -1,0 +1,133 @@
+@model Canela.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalles del Producto";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7QbPyXy+GkchgSJL+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<style>
+
+
+    .container {
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .details-header {
+        color: #ff69b4; /* Sweet Nela Pink */
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+
+    .card {
+        background-color: #fff; /* White card background */
+        border-radius: 12px; /* Slightly more rounded corners */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Lighter, softer shadow */
+        padding: 20px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border: none; /* Remove default card border */
+    }
+
+    .card:hover {
+        transform: translateY(-8px); /* Lift effect on hover */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+    }
+
+    .card-img-actions {
+        margin-bottom: 20px; /* Space below image */
+    }
+
+    .card-img-actions img {
+        width: 250px; /* Make image larger for details */
+        height: 250px; /* Make image larger for details */
+        border-radius: 50%; /* Keep it circular */
+        object-fit: cover;
+        display: block;
+        margin: 0 auto; /* Center the image */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Softer shadow for image */
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border: 4px solid #ffe6f0; /* Light pink border around image */
+    }
+
+    .card-img-actions img:hover {
+        transform: scale(1.03); /* Slight zoom on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Slightly darker shadow on hover */
+    }
+
+    .card-title {
+        color: #333; /* Darker text for titles */
+        margin-bottom: 15px;
+        font-size: 2em; /* Larger product name */
+        font-weight: 700;
+    }
+
+    .product-price {
+        font-size: 1.8em; /* Larger price */
+        font-weight: bold;
+        color: #ff69b4; /* Sweet Nela Pink for price */
+        margin-bottom: 25px;
+    }
+
+    .btn-add-to-cart {
+        background-color: #ff69b4; /* Sweet Nela Pink */
+        border-color: #ff69b4;
+        color: white;
+        padding: 12px 30px; /* Larger padding for a more prominent button */
+        font-size: 1.2em;
+        border-radius: 8px; /* Slightly more rounded button */
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: inline-flex; /* Align icon and text */
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-add-to-cart:hover {
+        background-color: #e05e9e; /* Darker pink on hover */
+        border-color: #e05e9e;
+        transform: translateY(-2px); /* Slight lift on hover */
+    }
+
+    .btn-back-to-catalog {
+        background-color: #6c757d; /* Gray for details button */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        margin-top: 20px; /* Space above the button */
+        display: inline-block; /* Allows margin-top to work */
+    }
+
+    .btn-back-to-catalog:hover {
+        background-color: #5a6268; /* Darker gray on hover */
+    }
+
+</style>
+
+<div class="container">
+    <h1 class="details-header" style="color: whitesmoke;">Detalles del Producto</h1>
+    <div class="row justify-content-center"> 
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="card-img-actions">
+                        <img class="img-responsive"
+                             src="@Html.DisplayFor(model => model.ImageURL)" alt="Imagen de @Model.Name" />
+                    </div>
+                    <h5 class="card-title">@Html.DisplayFor(model => model.Name)</h5>
+                    <p class="product-price">S/. @Html.DisplayFor(model => model.Price)</p>
+
+                    <a class="btn btn-add-to-cart" asp-controller="Carrito" asp-action="Add" asp-route-id="@Model.Id">
+                        <i class="fas fa-cart-plus"></i> Agregar al carrito
+                    </a>
+                </div>
+            </div>
+            <a class="btn btn-back-to-catalog" asp-action="Index">Volver al Catálogo</a>
+        </div>
+    </div>
+</div>

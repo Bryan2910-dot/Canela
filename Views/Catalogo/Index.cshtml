@@ -1,0 +1,433 @@
+﻿@model IEnumerable<Canela.Models.Producto>
+
+@{
+    ViewData["Title"] = "Nuestro Catálogo - Sweet Nela"; // More engaging title
+    double tipoCambio = ViewData["TipoCambioUSD"] != null ? Convert.ToDouble(ViewData["TipoCambioUSD"]) : 1;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7QbPyXy+GkchgSJL+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="catalog-page-container">
+    <div class="sidebar-mobile d-md-none mb-4">
+        <button class="btn btn-filter-toggle w-100" type="button" data-bs-toggle="collapse" data-bs-target="#mobileFilters" aria-expanded="false" aria-controls="mobileFilters">
+            Filtros <i class="fas fa-filter ms-2"></i>
+        </button>
+        <div class="collapse mt-2" id="mobileFilters">
+            <div class="filter-panel">
+                <ul class="filter-list">
+                    <li class="filter-group-item">
+                        <a class="filter-group-link" data-bs-toggle="collapse" href="#saboresSubfiltros">Sabores</a>
+                        <ul id="saboresSubfiltros" class="collapse filter-sublist">
+                            <li><a href="#" class="filter-option">Chocolate</a></li>
+                            <li><a href="#" class="filter-option">Vainilla</a></li>
+                            <li><a href="#" class="filter-option">Fresa</a></li>
+                            </ul>
+                    </li>
+                    <li class="filter-group-item">
+                        <a class="filter-group-link" data-bs-toggle="collapse" href="#tamanosSubfiltros">Tamaños</a>
+                        <ul id="tamanosSubfiltros" class="collapse filter-sublist">
+                            <li><a href="#" class="filter-option">Personal</a></li>
+                            <li><a href="#" class="filter-option">Mediano</a></li>
+                            <li><a href="#" class="filter-option">Grande</a></li>
+                            </ul>
+                    </li>
+                    <li class="filter-group-item">
+                        <a class="filter-group-link" data-bs-toggle="collapse" href="#modelosSubfiltros">Temáticas</a>
+                        <ul id="modelosSubfiltros" class="collapse filter-sublist">
+                            <li><a href="#" class="filter-option">Hora de Aventura</a></li>
+                            <li><a href="#" class="filter-option">Un Show Más</a></li>
+                            <li><a href="#" class="filter-option">Clarence</a></li>
+                            <li><a href="#" class="filter-option">One Piece</a></li>
+                            <li><a href="#" class="filter-option">Shawn Mendes</a></li>
+                            <li><a href="#" class="filter-option">1D</a></li>
+                            </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3 d-none d-md-block">
+            <div class="sidebar-desktop">
+                <div class="sidebar-header">
+                    <h4>Filtros</h4>
+                    <i class="fas fa-filter filter-icon-bg"></i>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-content-scroll">
+                    <ul class="filter-list">
+                        <li class="filter-group-item">
+                            <a class="filter-group-link" data-bs-toggle="collapse" href="#saboresSubfiltrosDesktop">Sabores</a>
+                            <ul id="saboresSubfiltrosDesktop" class="collapse show filter-sublist">
+                                <li><a href="#" class="filter-option">Chocolate</a></li>
+                                <li><a href="#" class="filter-option">Vainilla</a></li>
+                                <li><a href="#" class="filter-option">Fresa</a></li>
+                            </ul>
+                        </li>
+                        <li class="filter-group-item">
+                            <a class="filter-group-link" data-bs-toggle="collapse" href="#tamanosSubfiltrosDesktop">Tamaños</a>
+                            <ul id="tamanosSubfiltrosDesktop" class="collapse show filter-sublist">
+                                <li><a href="#" class="filter-option">Personal</a></li>
+                                <li><a href="#" class="filter-option">Mediano</a></li>
+                                <li><a href="#" class="filter-option">Grande</a></li>
+                            </ul>
+                        </li>
+                        <li class="filter-group-item">
+                            <a class="filter-group-link" data-bs-toggle="collapse" href="#modelosSubfiltrosDesktop">Temáticas</a>
+                            <ul id="modelosSubfiltrosDesktop" class="collapse show filter-sublist">
+                                <li><a href="#" class="filter-option">Hora de Aventura</a></li>
+                                <li><a href="#" class="filter-option">Un Show Más</a></li>
+                                <li><a href="#" class="filter-option">Clarence</a></li>
+                                <li><a href="#" class="filter-option">One Piece</a></li>
+                                <li><a href="#" class="filter-option">Shawn Mendes</a></li>
+                                <li><a href="#" class="filter-option">1D</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="catalog-header">
+                <h2 style="color: white;">Catálogo de Pasteles</h2>
+                </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
+                @foreach (var item in Model) {
+                <div class="col">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="@item.ImageURL" class="card-img-top" alt="Pastel de @item.Name">
+                            <div class="product-overlay-buttons">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-detail-overlay" title="Ver Detalles">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a asp-controller="Carrito" asp-action="Add" asp-route-id="@item.Id" class="btn btn-add-to-cart-overlay" title="Añadir al Carrito">
+                                    <i class="fas fa-cart-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="product-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                            <p class="product-price-display">
+                                <span class="price-soles" style="color: black;">S/. @item.Price</span> <br />
+                                <span class="price-usd">USD $@String.Format("{0:0.00}", item.Price * (decimal)tipoCambio)</span>
+                            </p>
+                            <a class="btn btn-view-details" asp-action="Details" asp-route-id="@item.Id">Ver Detalles</a>
+                        </div>
+                    </div>
+                </div>
+                }
+                @if (!Model.Any())
+                {
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">¡Lo sentimos! No hay productos disponibles en este momento o que coincidan con tus filtros.</p>
+                        <a href="@Url.Action("Index", "Catalogo")" class="btn btn-primary-alt mt-3">Ver todos los productos</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+/* Variables de color basadas en el header */
+:root {
+    --azul-principal: #1b6ec2;
+    --azul-oscuro: #1861ac;
+    --azul-claro: #0077cc;
+    --gris-oscuro: #333;
+    --gris-medio: #e5e5e5;
+    --gris-claro: #f8f9fa;
+    --blanco: #fff;
+    --sombra: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/* Estructura principal */
+.catalog-page-container {
+    padding: 2rem 0;
+    background-color: var(--gris-claro);
+}
+
+/* Sidebar y filtros */
+.sidebar-mobile {
+    margin-bottom: 1.5rem;
+}
+
+.btn-filter-toggle {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    transition: all 0.3s;
+    box-shadow: var(--sombra);
+}
+
+.btn-filter-toggle:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+}
+
+.filter-panel,
+.sidebar-desktop {
+    background-color: var(--blanco);
+    border-radius: 0.5rem;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-medio);
+}
+
+.sidebar-desktop {
+    position: sticky;
+    top: 1rem;
+    height: calc(100vh - 2rem);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sidebar-header h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--gris-oscuro);
+}
+
+.filter-icon-bg {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    padding: 0.5rem;
+    border-radius: 50%;
+    margin-left: 0.75rem;
+}
+
+.sidebar-divider {
+    border-top: 1px solid var(--gris-medio);
+    margin: 1rem 0;
+}
+
+.filter-group-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--gris-oscuro);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 0.25rem;
+}
+
+.filter-group-link:hover {
+    color: var(--azul-principal);
+    background-color: rgba(27, 110, 194, 0.1);
+}
+
+.filter-option {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--gris-oscuro);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.filter-option:hover {
+    color: var(--azul-principal);
+    padding-left: 1.25rem;
+}
+
+/* Encabezado del catálogo */
+.catalog-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.catalog-header h2 {
+    font-size: 2rem;
+    color: var(--gris-oscuro);
+    font-weight: 600;
+}
+
+/* Tarjetas de producto */
+.product-card {
+    background-color: var(--blanco);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--gris-medio);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.product-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.05);
+}
+
+.product-overlay-buttons {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s;
+}
+
+.product-card:hover .product-overlay-buttons {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-detail-overlay,
+.btn-add-to-cart-overlay {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.btn-detail-overlay:hover,
+.btn-add-to-cart-overlay:hover {
+    background-color: var(--azul-oscuro);
+    transform: scale(1.1);
+}
+
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gris-oscuro);
+    margin-bottom: 0.75rem;
+}
+
+.product-price-display {
+    margin-bottom: 1rem;
+}
+
+.price-soles {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--azul-principal);
+}
+
+.price-usd {
+    font-size: 0.9rem;
+    color: var(--gris-claro);
+}
+
+.btn-view-details {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s;
+    margin-top: auto;
+}
+
+.btn-view-details:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+}
+
+/* Mensaje sin productos */
+.text-muted {
+    color: var(--gris-claro) !important;
+}
+
+.btn-primary-alt {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary-alt:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+
+</style>r: #888;
+    display: block;
+}
+
+.btn-view-details {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view-details:hover {
+    background-color: #5a6268;
+}
+
+.btn-primary-alt {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary-alt:hover {
+    background-color: #e05e9e;
+}
+</style>
