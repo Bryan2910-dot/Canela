@@ -8,104 +8,127 @@
 
 
 <style>
+/* Variables de color basadas en el header */
+:root {
+    --azul-principal: #1b6ec2;
+    --azul-oscuro: #1861ac;
+    --azul-claro: #0077cc;
+    --gris-oscuro: #333;
+    --gris-medio: #e5e5e5;
+    --gris-claro: #f8f9fa;
+    --blanco: #fff;
+    --sombra: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
 
+/* Estructura principal */
+.container {
+    padding: 3rem 1rem;
+    background-color: var(--gris-claro);
+    min-height: calc(100vh - 60px);
+}
 
-    .container {
-        padding: 40px 20px;
-        text-align: center;
-    }
+.details-header {
+    color: var(--blanco);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
 
-    .details-header {
-        color: #ff69b4; /* Sweet Nela Pink */
-        margin-bottom: 30px;
-        font-size: 2.5em;
-        font-weight: bold;
-    }
+/* Tarjeta de producto */
+.card {
+    background-color: var(--blanco);
+    border-radius: 0.5rem;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-medio);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
 
-    .card {
-        background-color: #fff; /* White card background */
-        border-radius: 12px; /* Slightly more rounded corners */
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Lighter, softer shadow */
-        padding: 20px;
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        border: none; /* Remove default card border */
-    }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
 
-    .card:hover {
-        transform: translateY(-8px); /* Lift effect on hover */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
-    }
+.card-img-actions {
+    padding: 1.5rem;
+    text-align: center;
+}
 
-    .card-img-actions {
-        margin-bottom: 20px; /* Space below image */
-    }
+.card-img-actions img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-medio);
+    transition: transform 0.3s ease;
+}
 
-    .card-img-actions img {
-        width: 250px; /* Make image larger for details */
-        height: 250px; /* Make image larger for details */
-        border-radius: 50%; /* Keep it circular */
-        object-fit: cover;
-        display: block;
-        margin: 0 auto; /* Center the image */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Softer shadow for image */
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        border: 4px solid #ffe6f0; /* Light pink border around image */
-    }
+.card-img-actions img:hover {
+    transform: scale(1.03);
+}
 
-    .card-img-actions img:hover {
-        transform: scale(1.03); /* Slight zoom on hover */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Slightly darker shadow on hover */
-    }
+.card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
 
-    .card-title {
-        color: #333; /* Darker text for titles */
-        margin-bottom: 15px;
-        font-size: 2em; /* Larger product name */
-        font-weight: 700;
-    }
+.card-title {
+    color: var(--gris-oscuro);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
 
-    .product-price {
-        font-size: 1.8em; /* Larger price */
-        font-weight: bold;
-        color: #ff69b4; /* Sweet Nela Pink for price */
-        margin-bottom: 25px;
-    }
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-bottom: 1.5rem;
+}
 
-    .btn-add-to-cart {
-        background-color: #ff69b4; /* Sweet Nela Pink */
-        border-color: #ff69b4;
-        color: white;
-        padding: 12px 30px; /* Larger padding for a more prominent button */
-        font-size: 1.2em;
-        border-radius: 8px; /* Slightly more rounded button */
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        display: inline-flex; /* Align icon and text */
-        align-items: center;
-        gap: 8px;
-    }
+/* Botones */
+.btn-add-to-cart {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--sombra);
+}
 
-    .btn-add-to-cart:hover {
-        background-color: #e05e9e; /* Darker pink on hover */
-        border-color: #e05e9e;
-        transform: translateY(-2px); /* Slight lift on hover */
-    }
+.btn-add-to-cart:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(27, 110, 194, 0.2);
+}
 
-    .btn-back-to-catalog {
-        background-color: #6c757d; /* Gray for details button */
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-        margin-top: 20px; /* Space above the button */
-        display: inline-block; /* Allows margin-top to work */
-    }
+.btn-back-to-catalog {
+    background-color: var(--gris-oscuro);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+}
 
-    .btn-back-to-catalog:hover {
-        background-color: #5a6268; /* Darker gray on hover */
-    }
+.btn-back-to-catalog:hover {
+    background-color: #222;
+    transform: translateY(-2px);
+    color: var(--blanco);
+}
 
 </style>
 
