@@ -1,0 +1,156 @@
+@model Canela.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalles del Producto";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7QbPyXy+GkchgSJL+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<style>
+/* Variables de color basadas en el header */
+:root {
+    --azul-principal: #1b6ec2;
+    --azul-oscuro: #1861ac;
+    --azul-claro: #0077cc;
+    --gris-oscuro: #333;
+    --gris-medio: #e5e5e5;
+    --gris-claro: #f8f9fa;
+    --blanco: #fff;
+    --sombra: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/* Estructura principal */
+.container {
+    padding: 3rem 1rem;
+    background-color: var(--gris-claro);
+    min-height: calc(100vh - 60px);
+}
+
+.details-header {
+    color: var(--blanco);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Tarjeta de producto */
+.card {
+    background-color: var(--blanco);
+    border-radius: 0.5rem;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-medio);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.card-img-actions {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.card-img-actions img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--gris-medio);
+    transition: transform 0.3s ease;
+}
+
+.card-img-actions img:hover {
+    transform: scale(1.03);
+}
+
+.card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.card-title {
+    color: var(--gris-oscuro);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-bottom: 1.5rem;
+}
+
+/* Botones */
+.btn-add-to-cart {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--sombra);
+}
+
+.btn-add-to-cart:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(27, 110, 194, 0.2);
+}
+
+.btn-back-to-catalog {
+    background-color: var(--gris-oscuro);
+    color: var(--blanco);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-back-to-catalog:hover {
+    background-color: #222;
+    transform: translateY(-2px);
+    color: var(--blanco);
+}
+
+</style>
+
+<div class="container">
+    <h1 class="details-header" style="color: whitesmoke;">Detalles del Producto</h1>
+    <div class="row justify-content-center"> 
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="card-img-actions">
+                        <img class="img-responsive"
+                             src="@Html.DisplayFor(model => model.ImageURL)" alt="Imagen de @Model.Name" />
+                    </div>
+                    <h5 class="card-title">@Html.DisplayFor(model => model.Name)</h5>
+                    <p class="product-price">S/. @Html.DisplayFor(model => model.Price)</p>
+
+                    <a class="btn btn-add-to-cart" asp-controller="Carrito" asp-action="Add" asp-route-id="@Model.Id">
+                        <i class="fas fa-cart-plus"></i> Agregar al carrito
+                    </a>
+                </div>
+            </div>
+            <a class="btn btn-back-to-catalog" asp-action="Index">Volver al Catálogo</a>
+        </div>
+    </div>
+</div>
