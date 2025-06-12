@@ -129,8 +129,10 @@ namespace Canela.Data.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Precio")
-                        .HasColumnType("integer");
+                    b.Property<string>("PrecioText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Precio");
 
                     b.Property<int?>("ProductoId")
                         .HasColumnType("integer");

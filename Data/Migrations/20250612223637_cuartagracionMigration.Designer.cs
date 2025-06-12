@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Canela.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250612221858_CuartagracionMigration")]
-    partial class CuartagracionMigration
+    [Migration("20250612223637_cuartagracionMigration")]
+    partial class cuartagracionMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,8 +132,10 @@ namespace Canela.Data.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Precio")
-                        .HasColumnType("integer");
+                    b.Property<string>("PrecioText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Precio");
 
                     b.Property<int?>("ProductoId")
                         .HasColumnType("integer");

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Canela.Models
 {
@@ -14,14 +12,28 @@ namespace Canela.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        
         public string? UserName { get; set; }
+        
         public Producto? Producto { get; set; }
+        
         public int Cantidad { get; set; }
-        [NotNull]
-        public int Precio { get; set; }
-        public string Status { get; set; } = "PENDIENTE";
 
-        // Agrega esta propiedad para almacenar el ID del usuario
+        // Columna real en la base de datos (texto)
+        [Column("Precio", TypeName = "text")]  // Asegúrate de que coincida con el nombre en PostgreSQL
+        [NotNull]
+        public string? PrecioText { get; set; }
+
+        // Propiedad no mapeada para trabajar con el valor numérico
+        [NotMapped]
+        public decimal Precio  // Usamos decimal para manejar valores monetarios
+        { 
+            get => decimal.TryParse(PrecioText, out var result) ? result : 0m;
+            set => PrecioText = value.ToString(CultureInfo.InvariantCulture); // Evita problemas de formato
+        }
+        
+        public string Status { get; set; } = "PENDIENTE";
+        
         public string UserId { get; set; }
     }
 }

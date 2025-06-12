@@ -5,14 +5,14 @@
 namespace Canela.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CuartagracionMigration : Migration
+    public partial class cuartagracionMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Price",
-                table: "t_producto",
+                name: "Precio",
+                table: "t_preorden",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(int),
@@ -23,8 +23,8 @@ namespace Canela.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "Price",
-                table: "t_producto",
+                name: "Precio",
+                table: "t_preorden",
                 type: "integer",
                 nullable: false,
                 oldClrType: typeof(string),
