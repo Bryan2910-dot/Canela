@@ -21,13 +21,17 @@ namespace Canela.Service
 
         public async Task<List<Producto>?> GetAll()
         {
-            _logger.LogInformation("Fetching all products from the database.");
-            if (_context.DbSetProducto == null)
+            try
+            {
+                return await _context.DbSetProducto
+                    .Where(p => p.Status == "en oferta") // Filtra por status
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener productos");
                 return null;
-            var productos = await _context.DbSetProducto.ToListAsync();
-            //productos = productos.Where(p => p.Status == "A").ToList();
-            _logger.LogInformation("Fetched {1} products from the database.", productos.Count);
-            return productos;
+            }
         }
 
         public async Task<Producto?> GetById(int id)

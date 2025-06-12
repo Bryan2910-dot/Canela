@@ -1,68 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Canela.Data;
 using Canela.Models;
-using Microsoft.AspNetCore.Authorization;
+using Canela.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Canela.Integration.Exchange;
+using System.Diagnostics;
 
-namespace Canela.Controllers;
-
+namespace Canela.Controllers
+{
     public class CatalogoController : Controller
     {
-        private readonly ILogger<CatalogoController> _logger;
-        private readonly ApplicationDbContext _context;
-        private readonly ExchangeIntegration _exchange;
+        private readonly ProductoService _productoService;
 
-        public CatalogoController(ILogger<CatalogoController> logger, 
-            ApplicationDbContext context,
-            ExchangeIntegration exchange)
+        public CatalogoController(ProductoService productoService)
         {
-            _context = context;
-            _exchange = exchange;
-            _logger = logger;
+            _productoService = productoService;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var productos = _context.DbSetProducto.ToList();
-
-            var tipoCambio = new TipoCambio
+            try
             {
-                From = "PEN",
-                To = "USD",
-                Cantidad = 1
-            };
-
-            double rate = await _exchange.GetExchangeRate(tipoCambio);
-
-            ViewData["TipoCambioUSD"] = rate;
-            _logger.LogInformation("Tipo de cambio PEN -> USD: {rate}", rate);
-            
-            return View(productos);
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
-        {
-            Producto objProduct = await _context.DbSetProducto.FindAsync(id);
-            if (objProduct == null)
-            {
-                return NotFound();
+                var productos = await _productoService.GetAll();
+                return View(productos ?? new List<Producto>());
             }
-            return View(objProduct);
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error al cargar productos: {ex.Message}");
+                return View(new List<Producto>());
+            }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View("Error!");
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+}

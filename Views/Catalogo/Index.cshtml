@@ -1,136 +1,27 @@
 ﻿@model IEnumerable<Canela.Models.Producto>
 
 @{
-    ViewData["Title"] = "Nuestro Catálogo - Sweet Nela"; // More engaging title
-    double tipoCambio = ViewData["TipoCambioUSD"] != null ? Convert.ToDouble(ViewData["TipoCambioUSD"]) : 1;
+    ViewData["Title"] = "Productos en Oferta";
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7QbPyXy+GkchgSJL+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<div class="catalog-page-container">
-    <div class="sidebar-mobile d-md-none mb-4">
-        <button class="btn btn-filter-toggle w-100" type="button" data-bs-toggle="collapse" data-bs-target="#mobileFilters" aria-expanded="false" aria-controls="mobileFilters">
-            Filtros <i class="fas fa-filter ms-2"></i>
-        </button>
-        <div class="collapse mt-2" id="mobileFilters">
-            <div class="filter-panel">
-                <ul class="filter-list">
-                    <li class="filter-group-item">
-                        <a class="filter-group-link" data-bs-toggle="collapse" href="#saboresSubfiltros">Sabores</a>
-                        <ul id="saboresSubfiltros" class="collapse filter-sublist">
-                            <li><a href="#" class="filter-option">Chocolate</a></li>
-                            <li><a href="#" class="filter-option">Vainilla</a></li>
-                            <li><a href="#" class="filter-option">Fresa</a></li>
-                            </ul>
-                    </li>
-                    <li class="filter-group-item">
-                        <a class="filter-group-link" data-bs-toggle="collapse" href="#tamanosSubfiltros">Tamaños</a>
-                        <ul id="tamanosSubfiltros" class="collapse filter-sublist">
-                            <li><a href="#" class="filter-option">Personal</a></li>
-                            <li><a href="#" class="filter-option">Mediano</a></li>
-                            <li><a href="#" class="filter-option">Grande</a></li>
-                            </ul>
-                    </li>
-                    <li class="filter-group-item">
-                        <a class="filter-group-link" data-bs-toggle="collapse" href="#modelosSubfiltros">Temáticas</a>
-                        <ul id="modelosSubfiltros" class="collapse filter-sublist">
-                            <li><a href="#" class="filter-option">Hora de Aventura</a></li>
-                            <li><a href="#" class="filter-option">Un Show Más</a></li>
-                            <li><a href="#" class="filter-option">Clarence</a></li>
-                            <li><a href="#" class="filter-option">One Piece</a></li>
-                            <li><a href="#" class="filter-option">Shawn Mendes</a></li>
-                            <li><a href="#" class="filter-option">1D</a></li>
-                            </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-md-3 d-none d-md-block">
-            <div class="sidebar-desktop">
-                <div class="sidebar-header">
-                    <h4>Filtros</h4>
-                    <i class="fas fa-filter filter-icon-bg"></i>
-                </div>
-                <hr class="sidebar-divider">
-                <div class="sidebar-content-scroll">
-                    <ul class="filter-list">
-                        <li class="filter-group-item">
-                            <a class="filter-group-link" data-bs-toggle="collapse" href="#saboresSubfiltrosDesktop">Sabores</a>
-                            <ul id="saboresSubfiltrosDesktop" class="collapse show filter-sublist">
-                                <li><a href="#" class="filter-option">Chocolate</a></li>
-                                <li><a href="#" class="filter-option">Vainilla</a></li>
-                                <li><a href="#" class="filter-option">Fresa</a></li>
-                            </ul>
-                        </li>
-                        <li class="filter-group-item">
-                            <a class="filter-group-link" data-bs-toggle="collapse" href="#tamanosSubfiltrosDesktop">Tamaños</a>
-                            <ul id="tamanosSubfiltrosDesktop" class="collapse show filter-sublist">
-                                <li><a href="#" class="filter-option">Personal</a></li>
-                                <li><a href="#" class="filter-option">Mediano</a></li>
-                                <li><a href="#" class="filter-option">Grande</a></li>
-                            </ul>
-                        </li>
-                        <li class="filter-group-item">
-                            <a class="filter-group-link" data-bs-toggle="collapse" href="#modelosSubfiltrosDesktop">Temáticas</a>
-                            <ul id="modelosSubfiltrosDesktop" class="collapse show filter-sublist">
-                                <li><a href="#" class="filter-option">Hora de Aventura</a></li>
-                                <li><a href="#" class="filter-option">Un Show Más</a></li>
-                                <li><a href="#" class="filter-option">Clarence</a></li>
-                                <li><a href="#" class="filter-option">One Piece</a></li>
-                                <li><a href="#" class="filter-option">Shawn Mendes</a></li>
-                                <li><a href="#" class="filter-option">1D</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9">
-            <div class="catalog-header">
-                <h2 style="color: white;">Catálogo de Pasteles</h2>
-                </div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
-                @foreach (var item in Model) {
-                <div class="col">
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="@item.ImageURL" class="card-img-top" alt="Pastel de @item.Name">
-                            <div class="product-overlay-buttons">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-detail-overlay" title="Ver Detalles">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a asp-controller="Carrito" asp-action="Add" asp-route-id="@item.Id" class="btn btn-add-to-cart-overlay" title="Añadir al Carrito">
-                                    <i class="fas fa-cart-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="product-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <p class="product-price-display">
-                                <span class="price-soles" style="color: black;">S/. @item.Price</span> <br />
-                                <span class="price-usd">USD $@String.Format("{0:0.00}", item.Price * (decimal)tipoCambio)</span>
-                            </p>
-                            <a class="btn btn-view-details" asp-action="Details" asp-route-id="@item.Id">Ver Detalles</a>
-                        </div>
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@item.ImageURL" class="card-img-top" alt="@item.Name" style="max-height: 200px;">
+                    <div class="card-body">
+                        <h5>@item.Name</h5>
+                        <p class="text-success">Precio: S/ @item.Price</p>
+                        <p class="text-muted">@item.Status</p>
                     </div>
                 </div>
-                }
-                @if (!Model.Any())
-                {
-                    <div class="col-12 text-center py-5">
-                        <p class="text-muted">¡Lo sentimos! No hay productos disponibles en este momento o que coincidan con tus filtros.</p>
-                        <a href="@Url.Action("Index", "Catalogo")" class="btn btn-primary-alt mt-3">Ver todos los productos</a>
-                    </div>
-                }
             </div>
-        </div>
+        }
     </div>
 </div>
-
 
 <style>
 /* Variables de color basadas en el header */
