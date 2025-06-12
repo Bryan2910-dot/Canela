@@ -18,7 +18,7 @@ namespace Canela.Models
         public Producto? Producto { get; set; }
         public int Cantidad { get; set; }
         [NotNull]
-        public Decimal Precio { get; set; }
+        public int Precio { get; set; }
         public string Status { get; set; } = "PENDIENTE";
 
         // Agrega esta propiedad para almacenar el ID del usuario

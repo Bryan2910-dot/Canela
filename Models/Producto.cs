@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Canela.Models
 {
     [Table("t_producto")]
@@ -17,7 +18,7 @@ namespace Canela.Models
         [NotNull]
         public string? Name { get; set; }
         [NotNull]
-        public Decimal Price { get; set; }
+        public int Price { get; set; }
         [NotNull]
         public string? Status { get; set; }
         [NotNull]
