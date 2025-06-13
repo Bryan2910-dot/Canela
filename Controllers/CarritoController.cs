@@ -51,6 +51,7 @@ namespace Canela.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Add(int id)
         {
             var userId = _userManager.GetUserId(User);
@@ -59,12 +60,14 @@ namespace Canela.Controllers
             var producto = await _context.DbSetProducto.FindAsync(id);
             if (producto == null) return NotFound();
 
+            var user = await _userManager.GetUserAsync(User);
+
             var itemExistente = await _context.DbSetPreOrden
                 .Include(p => p.Producto)
                 .FirstOrDefaultAsync(p => p.Producto != null && 
-                                       p.Producto.Id == id && 
-                                       p.UserId == userId && 
-                                       p.Status == "PENDIENTE");
+                                    p.Producto.Id == id && 
+                                    p.UserId == userId && 
+                                    p.Status == "PENDIENTE");
 
             if (itemExistente != null)
             {
@@ -75,10 +78,11 @@ namespace Canela.Controllers
             {
                 _context.DbSetPreOrden.Add(new PreOrden
                 {
-                    Producto = producto,  // Asigna el objeto Producto completo
+                    Producto = producto,
                     PrecioText = producto.Price.ToString(CultureInfo.InvariantCulture),
                     Cantidad = 1,
                     UserId = userId,
+                    UserName = user?.UserName, // Añade el nombre de usuario
                     Status = "PENDIENTE"
                 });
             }
