@@ -27,6 +27,13 @@
                             <h5 class="product-title">@item.Name</h5>
                             <p class="product-price">S/ @item.Price.ToString("0.00")</p>
                             <span class="product-status">@item.Status</span>
+                            <!-- Botón añadido aquí -->
+                            <form asp-controller="Carrito" asp-action="Add" method="post" class="mt-2">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-primary w-100">
+                                    <i class="bi bi-cart-plus"></i> Añadir
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
