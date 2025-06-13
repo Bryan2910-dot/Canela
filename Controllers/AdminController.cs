@@ -41,20 +41,34 @@ namespace Canela.Controllers
         [HttpGet]
         public IActionResult CrearProducto()
         {
-            return View();
+            // Obtener el próximo ID disponible
+            var proximoId = _context.DbSetProducto.Any() ? 
+                        _context.DbSetProducto.Max(p => p.Id) + 1 : 1;
+            
+            return View(new Producto { Id = proximoId });
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CrearProducto(Producto producto)
         {
+            // Validar si el ID ya existe
+            if (_context.DbSetProducto.Any(p => p.Id == producto.Id))
+            {
+                ModelState.AddModelError("Id", "Este ID ya está en uso");
+            }
+
             if (ModelState.IsValid)
             {
+                producto.Status = "en oferta";
                 _context.DbSetProducto.Add(producto);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Productos");
+                return RedirectToAction(nameof(Productos));
             }
+            
             return View(producto);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> EditarProducto(int id)
@@ -65,13 +79,20 @@ namespace Canela.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditarProducto(Producto producto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarProducto(int id, Producto producto)
         {
+            if (id != producto.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
+                producto.Status = "en oferta";
                 _context.DbSetProducto.Update(producto);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Productos");
+                return RedirectToAction(nameof(Productos));
             }
             return View(producto);
         }
