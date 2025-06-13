@@ -1,29 +1,32 @@
 ﻿@model List<Canela.Models.Producto>
 
-<div class="container mt-4">
+<div class="container catalog-container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+    
     @if (!Model.Any())
     {
-        <div class="alert alert-warning">
+        <div class="no-products alert alert-warning">
             <strong>¡Atención!</strong> No encontramos productos en oferta.
             <button onclick="location.reload()" class="btn btn-sm btn-warning ms-3">Reintentar</button>
         </div>
     }
     else
     {
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
             @foreach (var item in Model)
             {
                 <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="@item.ImageURL" 
-                             class="card-img-top p-2"
-                             style="height: 200px; object-fit: contain;"
-                             alt="@item.Name"
-                             onerror="this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
+                    <div class="card product-card h-100">
+                        <div class="card-img-container">
+                            <img src="@item.ImageURL" 
+                                 class="card-img-top"
+                                 alt="@item.Name"
+                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">@item.Name</h5>
-                            <p class="text-success fw-bold">S/ @item.Price.ToString("0.00")</p>
-                            <span class="badge bg-info text-dark">@item.Status</span>
+                            <h5 class="product-title">@item.Name</h5>
+                            <p class="product-price">S/ @item.Price.ToString("0.00")</p>
+                            <span class="product-status">@item.Status</span>
                         </div>
                     </div>
                 </div>
@@ -32,301 +35,67 @@
     }
 </div>
 <style>
-/* Variables de color basadas en el header */
-:root {
-    --azul-principal: #1b6ec2;
-    --azul-oscuro: #1861ac;
-    --azul-claro: #0077cc;
-    --gris-oscuro: #333;
-    --gris-medio: #e5e5e5;
-    --gris-claro: #f8f9fa;
-    --blanco: #fff;
-    --sombra: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
+    /* Contenedor principal */
+    .catalog-container {
+        padding: 2rem 0;
+    }
 
-/* Estructura principal */
-.catalog-page-container {
-    padding: 2rem 0;
-    background-color: var(--gris-claro);
-}
+    /* Tarjetas de producto */
+    .product-card {
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-/* Sidebar y filtros */
-.sidebar-mobile {
-    margin-bottom: 1.5rem;
-}
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
 
-.btn-filter-toggle {
-    background-color: var(--azul-principal);
-    color: var(--blanco);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 0.25rem;
-    transition: all 0.3s;
-    box-shadow: var(--sombra);
-}
+    /* Imágenes responsivas */
+    .card-img-container {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        padding: 10px;
+    }
 
-.btn-filter-toggle:hover {
-    background-color: var(--azul-oscuro);
-    transform: translateY(-2px);
-}
+    .card-img-top {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
 
-.filter-panel,
-.sidebar-desktop {
-    background-color: var(--blanco);
-    border-radius: 0.5rem;
-    box-shadow: var(--sombra);
-    border: 1px solid var(--gris-medio);
-}
+    /* Textos y precios */
+    .product-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
 
-.sidebar-desktop {
-    position: sticky;
-    top: 1rem;
-    height: calc(100vh - 2rem);
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-}
+    .product-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #28a745;
+    }
 
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
+    .product-status {
+        font-size: 0.8rem;
+        background: #17a2b8;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        display: inline-block;
+    }
 
-.sidebar-header h4 {
-    margin: 0;
-    font-size: 1.25rem;
-    color: var(--gris-oscuro);
-}
-
-.filter-icon-bg {
-    background-color: var(--azul-principal);
-    color: var(--blanco);
-    padding: 0.5rem;
-    border-radius: 50%;
-    margin-left: 0.75rem;
-}
-
-.sidebar-divider {
-    border-top: 1px solid var(--gris-medio);
-    margin: 1rem 0;
-}
-
-.filter-group-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: var(--gris-oscuro);
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s;
-    border-radius: 0.25rem;
-}
-
-.filter-group-link:hover {
-    color: var(--azul-principal);
-    background-color: rgba(27, 110, 194, 0.1);
-}
-
-.filter-option {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: var(--gris-oscuro);
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.filter-option:hover {
-    color: var(--azul-principal);
-    padding-left: 1.25rem;
-}
-
-/* Encabezado del catálogo */
-.catalog-header {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.catalog-header h2 {
-    font-size: 2rem;
-    color: var(--gris-oscuro);
-    font-weight: 600;
-}
-
-/* Tarjetas de producto */
-.product-card {
-    background-color: var(--blanco);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow: var(--sombra);
-    transition: all 0.3s;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--gris-medio);
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
-}
-
-.product-image-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    padding-top: 100%;
-}
-
-.product-image-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-}
-
-.product-card:hover .product-image-container img {
-    transform: scale(1.05);
-}
-
-.product-overlay-buttons {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    opacity: 0;
-    transform: translateY(1rem);
-    transition: all 0.3s;
-}
-
-.product-card:hover .product-overlay-buttons {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.btn-detail-overlay,
-.btn-add-to-cart-overlay {
-    background-color: var(--azul-principal);
-    color: var(--blanco);
-    border: none;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s;
-}
-
-.btn-detail-overlay:hover,
-.btn-add-to-cart-overlay:hover {
-    background-color: var(--azul-oscuro);
-    transform: scale(1.1);
-}
-
-.card-body {
-    padding: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gris-oscuro);
-    margin-bottom: 0.75rem;
-}
-
-.product-price-display {
-    margin-bottom: 1rem;
-}
-
-.price-soles {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--azul-principal);
-}
-
-.price-usd {
-    font-size: 0.9rem;
-    color: var(--gris-claro);
-}
-
-.btn-view-details {
-    background-color: var(--azul-principal);
-    color: var(--blanco);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.3s;
-    margin-top: auto;
-}
-
-.btn-view-details:hover {
-    background-color: var(--azul-oscuro);
-    transform: translateY(-2px);
-}
-
-/* Mensaje sin productos */
-.text-muted {
-    color: var(--gris-claro) !important;
-}
-
-.btn-primary-alt {
-    background-color: var(--azul-principal);
-    color: var(--blanco);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.btn-primary-alt:hover {
-    background-color: var(--azul-oscuro);
-    transform: translateY(-2px);
-}
-
-/* Responsive */
-
-</style>r: #888;
-    display: block;
-}
-
-.btn-view-details {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-view-details:hover {
-    background-color: #5a6268;
-}
-
-.btn-primary-alt {
-    background-color: #ff69b4;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary-alt:hover {
-    background-color: #e05e9e;
-}
+    /* Mensaje sin productos */
+    .no-products {
+        padding: 2rem;
+        text-align: center;
+    }
 </style>
