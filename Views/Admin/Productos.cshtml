@@ -1,0 +1,48 @@
+@model List<Canela.Models.Producto>
+@{
+    ViewData["Title"] = "Administrar Productos";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@ViewData["Title"]</h1>
+        <a asp-action="CrearProducto" class="btn btn-primary">Nuevo Producto</a>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model)
+            {
+                <tr>
+                    <td>@producto.Id</td>
+                    <td>@producto.Name</td>
+                    <td>@producto.PriceText</td>
+                    <td>
+                        <span class="badge @(producto.Status == "Activo" ? "bg-success" : "bg-secondary")">
+                            @producto.Status
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="EditarProducto" asp-route-id="@producto.Id" class="btn btn-sm btn-warning">Editar</a>
+                        <form asp-action="EliminarProducto" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@producto.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
