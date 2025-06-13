@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using Canela.Services;
 
 namespace Canela.Controllers
 {
@@ -20,15 +21,18 @@ namespace Canela.Controllers
         private readonly ILogger<CarritoController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly ProductRecommender _recommender;
 
         public CarritoController(
             ILogger<CarritoController> logger,
             UserManager<IdentityUser> userManager,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            ProductRecommender recommender)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
+            _recommender = recommender;
         }
 
         public async Task<IActionResult> Index()
@@ -136,6 +140,12 @@ namespace Canela.Controllers
             await _context.SaveChangesAsync();
 
             return View("PagoYape", items); // Envía los items como modelo
+        }
+        [HttpGet]
+        public IActionResult Recomendaciones(int productoId)
+        {
+            var recomendaciones = _recommender.RecommendProducts(productoId);
+            return View(recomendaciones);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
