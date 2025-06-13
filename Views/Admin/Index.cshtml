@@ -1,0 +1,78 @@
+@model Canela.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Panel de Administración";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>Últimos Pagos</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pago in Model.Pagos)
+                            {
+                                <tr>
+                                    <td>@pago.Id</td>
+                                    <td>@pago.MontoTotal.ToString("C")</td>
+                                    <td>@pago.PaymentDate.ToString("g")</td>
+                                    <td>
+                                        <span class="badge @(pago.Status == "Completado" ? "bg-success" : "bg-warning")">
+                                            @pago.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h3>Usuarios Registrados</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in Model.Usuarios)
+                            {
+                                <tr>
+                                    <td>@usuario.Email</td>
+                                    <td>@(usuario.PhoneNumber ?? "No registrado")</td>
+                                    <td>@usuario.EmailConfirmed</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Productos" class="btn btn-success">Administrar Productos</a>
+    </div>
+</div>

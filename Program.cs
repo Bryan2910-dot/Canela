@@ -5,13 +5,14 @@ using Canela.Service;
 using Canela.Integration.Exchange;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using Canela.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de Sesión (mejorada para el carrito)
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo aumentado para el carrito
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.Name = "Canela.Carrito.Session";
@@ -25,9 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Configuración de Identity
+// Configuración de Identity con roles
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()
+    .AddRoles<IdentityRole>() // Añade soporte para roles
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Servicios personalizados
@@ -35,7 +36,7 @@ builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<ExchangeIntegration>();
 
 // Configuración del HttpContext
-builder.Services.AddHttpContextAccessor(); // Necesario para el carrito
+builder.Services.AddHttpContextAccessor();
 
 // Configuración de MVC
 builder.Services.AddControllersWithViews();
@@ -65,6 +66,53 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Configuración inicial de roles y usuario admin
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+        
+        // Crear roles si no existen
+        string[] roleNames = { "Admin", "User" };
+        foreach (var roleName in roleNames)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+        }
+        
+        // Crear usuario admin si no existe
+        string adminEmail = "admin@canela.com";
+        string adminPassword = "Admin123!";
+        
+        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        if (adminUser == null)
+        {
+            adminUser = new IdentityUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+            
+            var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+            if (createResult.Succeeded)
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Error al inicializar roles y usuario admin");
+    }
+}
+
 // Configuración del pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
@@ -84,11 +132,17 @@ app.UseRouting();
 app.UseCors("PermitirTodos");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession(); // Asegúrate de que esto esté después de UseRouting() y antes de Map endpoints
+app.UseSession();
+
+// Configuración de rutas
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();
