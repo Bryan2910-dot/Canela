@@ -11,6 +11,7 @@ namespace Canela.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("Id")]
         public int Id { get; set; }
         
         public string? UserName { get; set; }
@@ -31,8 +32,6 @@ namespace Canela.Models
             get => decimal.TryParse(PrecioText, out var result) ? result : 0m;
             set => PrecioText = value.ToString(CultureInfo.InvariantCulture); // Evita problemas de formato
         }
-        
-        public string Status { get; set; } = "PENDIENTE";
         
         public string UserId { get; set; }
     }
