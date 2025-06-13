@@ -1,0 +1,57 @@
+@model IEnumerable<Canela.Models.PreOrden>
+@{
+    ViewData["Title"] = "Pago con Yape";
+    var total = Model.Sum(p => decimal.Parse(p.PrecioText) * p.Cantidad);
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Pago con Yape</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Total a pagar:</h4>
+                    <h2 class="text-success mb-4">@total.ToString("C")</h2>
+                    
+                    <!-- QR estático - Ruta corregida -->
+                    <div class="border p-3 d-inline-block mb-4">
+                        <img src="/images/qryape.jpg" 
+                             alt="QR Yape" 
+                             class="img-fluid"
+                             style="max-width: 200px;">
+                    </div>
+                    
+                    <div class="instructions bg-light p-3 rounded mb-4">
+                        <h5 class="text-start">Instrucciones:</h5>
+                        <ol class="text-start">
+                            <li>Abre la app de <strong>Yape</strong> en tu celular</li>
+                            <li>Toca <strong>Escanear QR</strong></li>
+                            <li>Apunta tu cámara al código QR</li>
+                            <li>Confirma el pago de <strong>@total.ToString("C")</strong></li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Opción para confirmar pago manualmente -->
+                    <div class="manual-payment mt-4">
+                        <p class="text-muted">¿Ya realizaste el pago?</p>
+                        <button id="confirmarPago" class="btn btn-success">
+                            Confirmar Pago
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('confirmarPago').addEventListener('click', function() {
+            // Aquí puedes agregar lógica para confirmar el pago
+            alert('Gracias por tu pago. Tu pedido está siendo procesado.');
+            window.location.href = '@Url.Action("Index", "Home")';
+        });
+    </script>
+}

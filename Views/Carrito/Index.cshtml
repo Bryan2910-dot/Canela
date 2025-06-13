@@ -77,9 +77,12 @@ else
             </a>
         </div>
         <div class="col-md-6 text-right">
-            <a asp-controller="Orden" asp-action="Create" class="btn btn-primary">
-                Proceder al pago <i class="fas fa-arrow-right"></i>
-            </a>
+            <form asp-controller="Carrito" asp-action="ProcesarPago" method="post">
+                <input type="hidden" name="montoTotal" value="@Model.Sum(item => decimal.Parse(item.PrecioText) * item.Cantidad)" />
+                <button type="submit" class="btn btn-primary">
+                    Proceder al pago <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
         </div>
     </div>
 }

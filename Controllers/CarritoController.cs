@@ -115,6 +115,29 @@ namespace Canela.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ProcesarPago()
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null) return Challenge();
+
+            var items = await _context.DbSetPreOrden
+                .Include(p => p.Producto)
+                .Where(w => w.UserId == userId)
+                .ToListAsync();
+
+            if (!items.Any())
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Limpiar el carrito después de procesar
+            _context.DbSetPreOrden.RemoveRange(items);
+            await _context.SaveChangesAsync();
+
+            return View("PagoYape", items); // Envía los items como modelo
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
