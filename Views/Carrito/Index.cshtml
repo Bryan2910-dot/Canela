@@ -1,4 +1,5 @@
 @model IEnumerable<Canela.Models.PreOrden>
+@inject Canela.Services.ProductRecommender _recommender
 
 @{
     ViewData["Title"] = "Carrito de Compras";
@@ -85,4 +86,46 @@ else
             </form>
         </div>
     </div>
+
+    <!-- Sección de Recomendaciones - Corregida la sintaxis -->
+    
+        var primerProducto = Model.FirstOrDefault()?.Producto;
+        if (primerProducto != null)
+        {
+            var recomendaciones = _recommender.RecommendProducts(primerProducto.Id, 3);
+            if (recomendaciones.Any())
+            {
+                <div class="mt-5 border-top pt-4">
+                    <h3>Productos que podrían interesarte</h3>
+                    <div class="row">
+                        @foreach (var producto in recomendaciones)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="@producto.ImageURL" class="card-img-top" alt="@producto.Name" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@producto.Name</h5>
+                                        <p class="card-text text-success">@producto.PriceText</p>
+                                        <span class="badge bg-warning text-dark">@producto.Status</span>
+                                    </div>
+                                    <div class="card-footer bg-white">
+                                        <form asp-action="Add" asp-controller="Carrito" method="post">
+                                            <input type="hidden" name="id" value="@producto.Id" />
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-cart-plus"></i> Agregar
+                                            </button>
+                                            <a href="@Url.Action("Details", "Catalogo", new { id = producto.Id })" 
+                                               class="btn btn-outline-secondary btn-sm">
+                                                Ver detalles
+                                            </a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    
 }

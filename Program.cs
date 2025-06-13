@@ -6,6 +6,7 @@ using Canela.Integration.Exchange;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 using Canela.Models;
+using Canela.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 // Servicios personalizados
 builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<ExchangeIntegration>();
+builder.Services.AddScoped<ProductRecommender>();
 
 // Configuración del HttpContext
 builder.Services.AddHttpContextAccessor();
@@ -45,11 +47,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "API",
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title = "Canela API", 
         Version = "v1",
-        Description = "Descripción de la API"
+        Description = "API para el sistema de recomendaciones de Canela"
     });
 });
 
@@ -133,6 +134,11 @@ app.UseCors("PermitirTodos");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+app.UseSwagger();
+app.UseSwaggerUI(c => 
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Canela API v1");
+});
 
 // Configuración de rutas
 app.MapControllerRoute(
