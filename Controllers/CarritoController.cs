@@ -41,7 +41,7 @@ namespace Canela.Controllers
 
             var items = await _context.DbSetPreOrden
                 .Include(p => p.Producto)  // Asegura que carga el Producto relacionado
-                .Where(w => w.UserId == userId && w.Status == "PENDIENTE")
+                .Where(w => w.UserId == userId )
                 .ToListAsync();
 
             var total = items.Sum(c => c.Cantidad * c.Precio);
@@ -66,8 +66,7 @@ namespace Canela.Controllers
                 .Include(p => p.Producto)
                 .FirstOrDefaultAsync(p => p.Producto != null && 
                                     p.Producto.Id == id && 
-                                    p.UserId == userId && 
-                                    p.Status == "PENDIENTE");
+                                    p.UserId == userId );
 
             if (itemExistente != null)
             {
@@ -75,16 +74,17 @@ namespace Canela.Controllers
                 itemExistente.PrecioText = producto.Price.ToString(CultureInfo.InvariantCulture);
             }
             else
-            {
-                _context.DbSetPreOrden.Add(new PreOrden
+    {
+                var newItem = new PreOrden
                 {
+                    Id = _context.DbSetPreOrden.Any() ? _context.DbSetPreOrden.Max(p => p.Id) + 1 : 1,
                     Producto = producto,
-                    PrecioText = producto.Price.ToString(CultureInfo.InvariantCulture),
+                    Precio = producto.Price,
                     Cantidad = 1,
                     UserId = userId,
-                    UserName = user?.UserName, // Añade el nombre de usuario
-                    Status = "PENDIENTE"
-                });
+                    UserName = User.Identity?.Name
+                };
+                _context.DbSetPreOrden.Add(newItem);
             }
 
             await _context.SaveChangesAsync();
