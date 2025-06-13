@@ -4,39 +4,43 @@ using Canela.Data;
 using Canela.Service;
 using Canela.Integration.Exchange;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de Sesión (mejorada para el carrito)
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo aumentado para el carrito
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.Cookie.Name = "Canela.Carrito.Session";
 });
 
-// Add services to the container.
+// Configuración de la base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()));
-/*var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));*/
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Configuración de Identity
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-  .AddRoles<IdentityRole>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Servicios personalizados
+builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<ExchangeIntegration>();
+
+// Configuración del HttpContext
+builder.Services.AddHttpContextAccessor(); // Necesario para el carrito
+
+// Configuración de MVC
 builder.Services.AddControllersWithViews();
 
-//Registro mi logica customizada y reuzable
-builder.Services.AddScoped<ProductoService, ProductoService>();
-
-
-//Registro las integraciones
-builder.Services.AddScoped<ExchangeIntegration, ExchangeIntegration>();
-
-// API Documentation
+// Configuración de Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -48,8 +52,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-// Permitir CORS para todos los orígenes
+// Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTodos", policy =>
@@ -62,36 +65,26 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
     app.UseMigrationsEndPoint();
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-
-app.UseSwagger();
-
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-});
-
 app.UseRouting();
-
-app.UseSession();
-
-app.UseAuthorization();
-
 app.UseCors("PermitirTodos");
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession(); // Asegúrate de que esto esté después de UseRouting() y antes de Map endpoints
 
 app.MapControllerRoute(
     name: "default",
