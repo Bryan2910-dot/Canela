@@ -64,7 +64,10 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+var builder1 = WebApplication.CreateBuilder(args);
 
+// Agrega esta línea para registrar tu servicio:
+builder.Services.AddScoped<SentimentService>();
 var app = builder.Build();
 
 // Configuración inicial de roles y usuario admin
