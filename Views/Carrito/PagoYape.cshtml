@@ -4,6 +4,100 @@
     var total = Model.Sum(p => decimal.Parse(p.PrecioText) * p.Cantidad);
 }
 
+<style>
+    /* Variables de color */
+    :root {
+        --rosa-principal: #e83e8c;
+        --rosa-claro: #f9d6e8;
+        --gris-oscuro: #333;
+        --gris-claro: #777;
+        --blanco: #fff;
+    }
+
+    /* Estilos generales */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f9f3f3;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(232, 62, 140, 0.1);
+    }
+
+    .card-header {
+        background-color: var(--rosa-principal) !important;
+        color: var(--blanco) !important;
+        font-weight: 600;
+        padding: 20px;
+    }
+
+    .card-title {
+        color: var(--gris-oscuro);
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .text-success {
+        color: var(--rosa-principal) !important;
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+
+    /* QR Container */
+    .border {
+        border: 2px dashed var(--rosa-principal) !important;
+        border-radius: 10px;
+        background-color: var(--blanco);
+    }
+
+    /* Instrucciones */
+    .instructions {
+        background-color: var(--rosa-claro) !important;
+        border-left: 4px solid var(--rosa-principal);
+    }
+
+    .instructions h5 {
+        color: var(--gris-oscuro);
+        font-weight: 600;
+    }
+
+    .instructions ol {
+        padding-left: 20px;
+    }
+
+    .instructions li {
+        margin-bottom: 8px;
+        color: var(--gris-oscuro);
+    }
+
+    .instructions strong {
+        color: var(--rosa-principal);
+    }
+
+    /* Botones */
+    .btn-success {
+        background-color: var(--rosa-principal);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-success:hover {
+        background-color: #d42d7b;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(232, 62, 140, 0.3);
+    }
+
+    .text-muted {
+        color: var(--gris-claro) !important;
+    }
+</style>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
@@ -55,3 +149,6 @@
         });
     </script>
 }
+
+<!-- Fuentes necesarias -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

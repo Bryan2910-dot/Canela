@@ -3,6 +3,118 @@
     ViewData["Title"] = "Panel de Administración";
 }
 
+<style>
+    /* Variables de color */
+    :root {
+        --rosa-principal: #e83e8c;
+        --rosa-claro: #f9d6e8;
+        --gris-oscuro: #333;
+        --gris-claro: #777;
+        --blanco: #fff;
+    }
+
+    /* Estilos generales */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f9f3f3;
+    }
+
+    h1 {
+        color: var(--rosa-principal);
+        font-size: 2.5rem;
+        text-align: center;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--rosa-principal);
+    }
+
+    /* Tarjetas */
+    .card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        font-weight: 600;
+        padding: 15px 20px;
+    }
+
+    .bg-primary {
+        background-color: var(--rosa-principal) !important;
+    }
+
+    .bg-info {
+        background-color: var(--gris-oscuro) !important;
+    }
+
+    /* Tablas */
+    .table {
+        background-color: var(--blanco);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: var(--rosa-claro);
+    }
+
+    .table th {
+        background-color: var(--rosa-principal);
+        color: var(--blanco);
+        border: none;
+    }
+
+    .table td, .table th {
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+
+    /* Badges */
+    .badge {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+    }
+
+    .bg-warning {
+        background-color: #ffc107 !important;
+        color: var(--gris-oscuro) !important;
+    }
+
+    /* Botones */
+    .btn-success {
+        background-color: var(--rosa-principal);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-success:hover {
+        background-color: #d42d7b;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(232, 62, 140, 0.3);
+    }
+</style>
+
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
 
@@ -72,7 +184,10 @@
         </div>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-4 text-center">
         <a asp-action="Productos" class="btn btn-success">Administrar Productos</a>
     </div>
 </div>
+
+<!-- Fuentes necesarias -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

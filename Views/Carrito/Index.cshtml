@@ -5,6 +5,144 @@
     ViewData["Title"] = "Carrito de Compras";
 }
 
+<style>
+    /* Variables de color */
+    :root {
+        --rosa-principal: #e83e8c;
+        --rosa-claro: #f9d6e8;
+        --gris-oscuro: #333;
+        --gris-claro: #777;
+        --blanco: #fff;
+    }
+
+    /* Estilos generales */
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    h1 {
+        color: var(--rosa-principal);
+        font-size: 2.5rem;
+        text-align: center;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--rosa-principal);
+    }
+
+    /* Tabla del carrito */
+    .table {
+        background-color: var(--blanco);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .table thead th {
+        background-color: var(--rosa-principal);
+        color: var(--blanco);
+        border: none;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: var(--rosa-claro);
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(232, 62, 140, 0.1);
+    }
+
+    /* Botones */
+    .btn-outline-primary {
+        color: var(--rosa-principal);
+        border-color: var(--rosa-principal);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--rosa-principal);
+        color: var(--blanco);
+    }
+
+    .btn-primary {
+        background-color: var(--rosa-principal);
+        border-color: var(--rosa-principal);
+    }
+
+    .btn-primary:hover {
+        background-color: #d42d7b;
+        border-color: #d42d7b;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-outline-secondary {
+        color: var(--gris-oscuro);
+        border-color: var(--gris-claro);
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: var(--gris-claro);
+        color: var(--blanco);
+    }
+
+    /* Alertas */
+    .alert-info {
+        background-color: var(--rosa-claro);
+        border-color: var(--rosa-principal);
+        color: var(--gris-oscuro);
+    }
+
+    .alert-info a {
+        color: var(--rosa-principal);
+        font-weight: bold;
+    }
+
+    /* Recomendaciones */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-footer {
+        background-color: var(--blanco);
+        border-top: 1px solid var(--rosa-claro);
+    }
+
+    .badge.bg-warning {
+        background-color: var(--gris-claro) !important;
+        color: var(--blanco) !important;
+    }
+
+    /* Inputs */
+    .form-control:focus {
+        border-color: var(--rosa-principal);
+        box-shadow: 0 0 0 0.25rem rgba(232, 62, 140, 0.25);
+    }
+</style>
+
 <h1>@ViewData["Title"]</h1>
 
 @if (!Model.Any())
@@ -87,7 +225,7 @@ else
         </div>
     </div>
 
-    <!-- Sección de Recomendaciones - Corregida la sintaxis -->
+    <!-- Sección de Recomendaciones -->
     
         var primerProducto = Model.FirstOrDefault()?.Producto;
         if (primerProducto != null)
@@ -129,3 +267,7 @@ else
         }
     
 }
+
+<!-- Incluye Font Awesome para los iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

@@ -4,6 +4,133 @@
     ViewData["Title"] = "Productos Recomendados";
 }
 
+<style>
+    /* Variables de color */
+    :root {
+        --rosa-principal: #e83e8c;
+        --rosa-claro: #f9d6e8;
+        --gris-oscuro: #333;
+        --gris-claro: #777;
+        --blanco: #fff;
+    }
+
+    /* Estilos generales */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f9f3f3;
+    }
+
+    h2 {
+        color: var(--rosa-principal);
+        font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--rosa-principal);
+    }
+
+    /* Tarjetas de producto */
+    .card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background-color: var(--blanco);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(232, 62, 140, 0.15);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.03);
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        color: var(--gris-oscuro);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-text.text-success {
+        color: var(--rosa-principal) !important;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .badge.bg-warning {
+        background-color: var(--gris-claro) !important;
+        color: var(--blanco) !important;
+        font-weight: 500;
+    }
+
+    /* Footer de tarjetas */
+    .card-footer {
+        background-color: var(--blanco);
+        border-top: 1px solid var(--rosa-claro);
+        padding: 1rem;
+    }
+
+    /* Botones */
+    .btn-primary {
+        background-color: var(--rosa-principal);
+        border-color: var(--rosa-principal);
+    }
+
+    .btn-primary:hover {
+        background-color: #d42d7b;
+        border-color: #d42d7b;
+    }
+
+    .btn-outline-secondary {
+        color: var(--gris-oscuro);
+        border-color: var(--gris-claro);
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: var(--gris-claro);
+        color: var(--blanco);
+    }
+
+    .btn-outline-primary {
+        color: var(--rosa-principal);
+        border-color: var(--rosa-principal);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--rosa-principal);
+        color: var(--blanco);
+    }
+
+    /* Botón Volver */
+    .btn-outline-primary {
+        margin-top: 1rem;
+    }
+</style>
+
 <div class="container mt-4">
     <h2>@ViewData["Title"]</h2>
     
@@ -35,9 +162,13 @@
         }
     </div>
     
-    <div class="mt-3">
+    <div class="mt-3 text-center">
         <a href="@Url.Action("Index", "Catalogo")" class="btn btn-outline-primary">
             <i class="fas fa-arrow-left"></i> Volver al catálogo
         </a>
     </div>
 </div>
+
+<!-- Incluye Font Awesome para los iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

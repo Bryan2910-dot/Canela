@@ -3,45 +3,151 @@
     ViewData["Title"] = "Crear Producto";
 }
 
+<style>
+    /* Variables de color */
+    :root {
+        --rosa-principal: #e83e8c;
+        --rosa-claro: #f9d6e8;
+        --gris-oscuro: #333;
+        --gris-claro: #777;
+        --blanco: #fff;
+    }
+
+    /* Estilos generales */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f9f3f3;
+    }
+
+    h1 {
+        color: var(--rosa-principal);
+        font-size: 2.2rem;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 3px;
+        background-color: var(--rosa-principal);
+    }
+
+    /* Formulario */
+    .form-container {
+        background-color: var(--blanco);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--gris-oscuro);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        border: 1px solid var(--gris-claro);
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--rosa-principal);
+        box-shadow: 0 0 0 0.25rem rgba(232, 62, 140, 0.25);
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.9rem;
+    }
+
+    /* Botones */
+    .btn {
+        font-weight: 600;
+        padding: 10px 25px;
+        border-radius: 30px;
+        transition: all 0.3s;
+    }
+
+    .btn-primary {
+        background-color: var(--rosa-principal);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #d42d7b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(232, 62, 140, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: var(--gris-claro);
+        border: none;
+        color: var(--blanco);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--gris-oscuro);
+        transform: translateY(-2px);
+    }
+
+    /* Espaciado */
+    .mb-3 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+</style>
+
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <form asp-action="CrearProducto">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-container">
+                <form asp-action="CrearProducto">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="Id" class="form-label"></label>
-                    <input asp-for="Id" class="form-control" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Id" class="form-label"></label>
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="PriceText" class="form-label"></label>
-                    <input asp-for="PriceText" class="form-control" />
-                    <span asp-validation-for="PriceText" class="text-danger"></span>
-                </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="PriceText" class="form-label"></label>
+                        <input asp-for="PriceText" class="form-control" />
+                        <span asp-validation-for="PriceText" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="ImageURL" class="form-label"></label>
-                    <input asp-for="ImageURL" class="form-control" />
-                    <span asp-validation-for="ImageURL" class="text-danger"></span>
-                </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ImageURL" class="form-label"></label>
+                        <input asp-for="ImageURL" class="form-control" />
+                        <span asp-validation-for="ImageURL" class="text-danger"></span>
+                    </div>
 
-                <input type="hidden" asp-for="Status" value="en oferta" />
+                    <input type="hidden" asp-for="Status" value="en oferta" />
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a asp-action="Productos" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a asp-action="Productos" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -49,3 +155,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<!-- Fuentes necesarias -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">

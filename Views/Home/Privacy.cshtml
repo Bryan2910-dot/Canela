@@ -1,6 +1,166 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Elegance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-principal: #e83e8c;
+            --rosa-claro: #f9d6e8;
+            --gris-oscuro: #333;
+            --gris-claro: #777;
+            --blanco: #fff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f3f3;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: var(--rosa-principal);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--rosa-principal);
+        }
+
+        h2 {
+            color: var(--gris-oscuro);
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        p, li {
+            color: var(--gris-claro);
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--rosa-principal);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #d42d7b;
+        }
+
+        .privacy-section {
+            background-color: var(--blanco);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            background-color: var(--rosa-claro);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: var(--rosa-principal);
+            color: var(--blanco);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #d42d7b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(232, 62, 140, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        
+        <div class="privacy-section">
+            <h2>Tu privacidad es importante para nosotros</h2>
+            <p>En <span class="highlight">Elegance</span>, nos comprometemos a proteger la información personal que nos compartes. Esta política explica cómo recopilamos, usamos y salvaguardamos tus datos.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Información que recopilamos</h2>
+            <p>Podemos recopilar los siguientes tipos de información:</p>
+            <ul>
+                <li>Datos personales (nombre, email, dirección) al realizar una compra.</li>
+                <li>Información de transacciones (productos adquiridos, método de pago).</li>
+                <li>Datos de navegación (IP, tipo de dispositivo, páginas visitadas).</li>
+            </ul>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Cómo usamos tu información</h2>
+            <p>Utilizamos tus datos para:</p>
+            <ul>
+                <li>Procesar pedidos y enviar actualizaciones.</li>
+                <li>Mejorar nuestros productos y servicios.</li>
+                <li>Enviar ofertas personalizadas (si aceptas marketing).</li>
+                <li>Cumplir con obligaciones legales.</li>
+            </ul>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Protección de datos</h2>
+            <p>Implementamos medidas de seguridad como:</p>
+            <ul>
+                <li>Encriptación SSL para transacciones.</li>
+                <li>Acceso restringido a información sensible.</li>
+                <li>Revisiones periódicas de seguridad.</li>
+            </ul>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Tus derechos</h2>
+            <p>Tienes derecho a:</p>
+            <ul>
+                <li>Solicitar acceso o corrección de tus datos.</li>
+                <li>Eliminar tu cuenta y datos personales.</li>
+                <li>Oponerte al procesamiento de tus datos.</li>
+            </ul>
+            <p>Para ejercer estos derechos, contáctanos en <a href="mailto:privacidad@elegance.com">privacidad@elegance.com</a>.</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-btn">Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>
